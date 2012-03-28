@@ -4,6 +4,11 @@
  */
 package jonnentowerdefense;
 
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+
 /**
  *
  * @author jonne
@@ -34,6 +39,7 @@ public class Game {
             TDArea = new GameArea(area);
             monsterList = new Monster[5];
             towerList = new Tower[5];
+            GameWindow main = new GameWindow(this);
         }
         
         public void GameLoop() {
@@ -61,7 +67,7 @@ public class Game {
             int horTower = tower.getLocation().getHorPos();
             int verMonster = toBeChecked.getLocation().getVerPos();
             int horMonster = toBeChecked.getLocation().getHorPos();
-            int distanceFromMonster;// = TDArea.greatestDistance();
+            int distanceFromMonster;
             
             //Lasketaan tornin ja monsterin etäisyys janan pituuden kaavalla.
             distanceFromMonster = (int)Math.sqrt(Math.pow(horMonster-horTower,2)+Math.pow(verMonster-verTower, 2));

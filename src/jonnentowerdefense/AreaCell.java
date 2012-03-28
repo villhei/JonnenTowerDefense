@@ -4,11 +4,13 @@
  */
 package jonnentowerdefense;
 
+import javax.swing.*;
+
 /**
  *
  * @author jonne
  */
-public class AreaCell {
+public class AreaCell extends JPanel {
     
     private boolean buildable;
     private boolean route;

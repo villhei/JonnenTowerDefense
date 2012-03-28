@@ -22,6 +22,6 @@ public class JonnenTowerDefense {
     
     public static void main(String[] args) {
 
-        Game game = new Game();
-    }
+        Game game = new Game(); 
+   }
 }
