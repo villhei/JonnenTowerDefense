@@ -36,22 +36,40 @@ public class Game {
             towerList = new Tower[5];
         }
         
+        public void GameLoop() {
+            while(true) {
+                
+            }
+        }
+        
         public Monster findTarget(Tower tower) {
-            int ver = tower.getLocation().getVerPos();
-            int hor = tower.getLocation().getHorPos();
-            int distanceFromTarget = TDArea.greatestDistance();
+            
             Monster closestMonster = null;
             
             for (int i = 0; i < monsterList.length; i++) {
-                if(ver == monsterList[i].getLocation().getVerPos())
-                    distanceFromTarget = 1*(hor-monsterList[i].getLocation().getHorPos());
-                else if(hor == monsterList[i].getLocation().getHorPos())
-                    distanceFromTarget = 1*(ver-monsterList[i].getLocation().getVerPos());
-                
-                if(distanceFromTarget <= tower.getRange() && distanceFromTarget < 1*(ver-closestMonster.getLocation().getVerPos()) )
-                    closestMonster = monsterList[i];
+                Monster tmpMonster = monsterList[i];
+                if(isInRange(tmpMonster, tower))
+                    closestMonster = tmpMonster;
             }
-            return new DefaultMonster(5);
+            
+            return closestMonster;
+        }
+        
+        public boolean isInRange(Monster toBeChecked, Tower tower) {
+            boolean inRange = false;
+            int verTower = tower.getLocation().getVerPos();
+            int horTower = tower.getLocation().getHorPos();
+            int verMonster = toBeChecked.getLocation().getVerPos();
+            int horMonster = toBeChecked.getLocation().getHorPos();
+            int distanceFromMonster;// = TDArea.greatestDistance();
+            
+            //Lasketaan tornin ja monsterin etäisyys janan pituuden kaavalla.
+            distanceFromMonster = (int)Math.sqrt(Math.pow(horMonster-horTower,2)+Math.pow(verMonster-verTower, 2));
+            
+            if(distanceFromMonster <= tower.getRange())
+                return true;
+            else
+                return false;
         }
         
         public GameArea getGameArea() {
