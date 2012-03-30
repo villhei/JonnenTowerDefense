@@ -20,6 +20,8 @@ public interface Tower {
     
     public int getAtkSpeed();
     
+    public void setLocation(int x, int y);
+    
     public Location getLocation();
     
 }
