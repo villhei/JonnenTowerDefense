@@ -29,7 +29,7 @@ public class GameTest {
     DefaultTower testTower;
     Game game;
     
-    @Before
+    @Before 
     public void setUp() {
         game = new Game();
         
