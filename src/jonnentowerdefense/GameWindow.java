@@ -11,14 +11,14 @@ import javax.swing.*;
  *
  * @author jonne
  */
-public class GameWindow {
+public class GameWindow extends JPanel{
     
     
     private static char[][] area = {{'B', 'B', 'S', 'B', 'B'},
-                                        {'B', 'B', 'E', 'B', 'B'},
-                                        {'B', 'B', 'E', 'B', 'B'},
-                                        {'B', 'B', 'E', 'B', 'B'},
-                                        {'B', 'B', 'F', 'B', 'B'}};
+                                    {'B', 'B', 'E', 'B', 'B'},
+                                    {'B', 'B', 'E', 'B', 'B'},
+                                    {'B', 'B', 'E', 'B', 'B'},
+                                    {'B', 'B', 'F', 'B', 'B'}};
     JFrame frame;
     private GameArea TDArea;
     final int horSize = 600;
@@ -28,6 +28,9 @@ public class GameWindow {
     public GameWindow(Game game) {
         this.TDGame = game;
         this.TDArea = new GameArea(area);
+        this.AreaArray = TDArea.getArea();
+        horSize = AreaArray.length*60;
+        verSize = AreaArray[0].length*60;
         frame = new JFrame("Jonnen Tower Defense");
         frame.setSize(horSize,verSize);
         frame.setLayout(new BorderLayout());
@@ -80,6 +83,11 @@ public class GameWindow {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+    }
+    
+    @Override public void paint(Graphics g) {
+        super.paint(g);
+        
     }
    
 }
