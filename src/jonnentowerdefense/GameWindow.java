@@ -13,12 +13,21 @@ import javax.swing.*;
  */
 public class GameWindow {
     
-    
-    private static char[][] area = {{'B', 'B', 'S', 'B', 'B'},
-                                        {'B', 'B', 'E', 'B', 'B'},
-                                        {'B', 'B', 'E', 'B', 'B'},
-                                        {'B', 'B', 'E', 'B', 'B'},
-                                        {'B', 'B', 'F', 'B', 'B'}};
+    /**
+         * B = buildable, E = empty, S = start, F = finish.
+         */
+    private static char[][] area =     {{'B', 'S', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'F', 'B'},
+                                        {'B', 'E', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'E', 'B'},
+                                        {'B', 'E', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'E', 'B'},
+                                        {'B', 'E', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'E', 'B'},
+                                        {'B', 'E', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'E', 'B'},
+                                        {'B', 'E', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'E', 'B'},
+                                        {'B', 'E', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'E', 'B'},
+                                        {'B', 'E', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'E', 'B'},
+                                        {'B', 'E', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'E', 'B'},
+                                        {'B', 'E', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'E', 'B'},
+                                        {'B', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'B'},
+                                        {'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'},};
     JFrame frame;
     private GameArea TDArea;
     final int horSize = 600;
@@ -40,12 +49,23 @@ public class GameWindow {
         gamearea.setPreferredSize(new Dimension(600,600));
         gamearea.setVisible(true);
         
-        for (int i = 0; i < 144; i++) {
-            JPanel cell = new JPanel();
-            cell.setSize(50, 50);
-            cell.setBackground(Color.green);
-            cell.setVisible(true);
-            gamearea.add(cell);
+        
+        AreaCell[][] areaArray = TDArea.getArea();
+        for (int i = 0; i < areaArray.length; i++) {
+            for (int j = 0; j < areaArray[0].length; j++) {
+                JPanel cell = new JPanel();
+                cell.setSize(50, 50);
+                if(areaArray[i][j].buildCell())
+                    cell.setBackground(Color.green);
+                else if(areaArray[i][j].routeCell() && !areaArray[i][j].isStart() && !areaArray[i][j].isFinish())
+                    cell.setBackground(Color.gray);
+                else if(areaArray[i][j].isStart())
+                    cell.setBackground(Color.blue);
+                else if(areaArray[i][j].isFinish())
+                    cell.setBackground(Color.red);
+                cell.setVisible(true);
+                gamearea.add(cell);    
+            }
         }
         
         JPanel menuarea = new JPanel(new GridLayout());
