@@ -58,6 +58,10 @@ public class DefaultTower implements Tower {
 //        
 //        return null;
 //    }
+
+    public void setLocation(int x, int y) {
+        this.location = new Location(x,y);
+    }
     
     public Location getLocation() {
         return this.location;

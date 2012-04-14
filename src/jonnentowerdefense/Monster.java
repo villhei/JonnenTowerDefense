@@ -18,5 +18,7 @@ public interface Monster {
     
     public void die();
     
+    public void setLocation(int x, int y);
+    
     public Location getLocation();    
 }

@@ -12,6 +12,7 @@ public class DefaultMonster implements Monster {
     
     
     private int health;
+    private Location location;
     public DefaultMonster(int health) {
         this.health = health;
     }
@@ -29,8 +30,11 @@ public class DefaultMonster implements Monster {
         
     }
     
+    public void setLocation(int x, int y) {
+        this.location = new Location(x,y);
+    }
     public Location getLocation() {
-        return new Location(0,0);
+        return location;
     }
     
     public void moveMonster() {

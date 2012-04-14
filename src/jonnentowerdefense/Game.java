@@ -32,10 +32,10 @@ public class Game {
         Tower[] towerList;
         
         public Game() {
-            this.init();
+            this.initiate();
         }
         
-        public void init() {
+        public void initiate() {
             TDArea = new GameArea(area);
             monsterList = new Monster[5];
             towerList = new Tower[5];

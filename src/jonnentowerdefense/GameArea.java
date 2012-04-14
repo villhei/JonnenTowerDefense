@@ -52,6 +52,10 @@ public class GameArea {
         }
     }
     
+    public AreaCell[][] getArea() {
+        return gameArea;
+    }
+     
     public int greatestDistance() {
         return Math.max(area.length, area[0].length);
     }
