@@ -44,6 +44,30 @@ public class GameWindow {
         frame.setBackground(Color.black);
         frame.setResizable(false);
         
+        
+        JPanel gamearea = makeGameArea();
+        JPanel menuarea = new JPanel(new GridLayout());
+        JPanel build = makeBuildArea();
+        JPanel score = makeScoreArea();
+
+//        for (int i = 0; i < 4 ; i++) {
+//            JPanel buildpanel = new JPanel();
+//            buildpanel.setSize(10,10);
+//            buildpanel.setBackground(Color.YELLOW);
+//            buildpanel.setVisible(true);
+//            build.add(buildpanel);
+//        }
+        menuarea.add(build);
+        menuarea.add(score);
+        
+        frame.add(gamearea,BorderLayout.NORTH);
+        frame.add(menuarea,BorderLayout.SOUTH);
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    }
+    
+    public JPanel makeGameArea() {
         JPanel gamearea = new JPanel(new GridLayout(12,12,1,1));
         gamearea.setSize(600, 600);
         gamearea.setPreferredSize(new Dimension(600,600));
@@ -67,24 +91,19 @@ public class GameWindow {
                 gamearea.add(cell);    
             }
         }
-        
-        JPanel menuarea = new JPanel(new GridLayout());
-        
+        return gamearea;
+    }
+    
+    public JPanel makeBuildArea() {
         JPanel build = new JPanel(new GridLayout(2,2,5,5));
         build.setSize(300,200);
         build.setPreferredSize(new Dimension(300,200));
         build.setBackground(Color.LIGHT_GRAY);
         build.setVisible(true);
-        
-
-//        for (int i = 0; i < 4 ; i++) {
-//            JPanel buildpanel = new JPanel();
-//            buildpanel.setSize(10,10);
-//            buildpanel.setBackground(Color.YELLOW);
-//            buildpanel.setVisible(true);
-//            build.add(buildpanel);
-//        }
-        
+        return build;
+    }
+    
+    public JPanel makeScoreArea() {
         JPanel score = new JPanel();
         score.setSize(300,200);
         score.setPreferredSize(new Dimension(300,200));
@@ -92,19 +111,15 @@ public class GameWindow {
         score.setVisible(true);
         JLabel scoretxt = new JLabel("SCORE");
         score.add(scoretxt);
-        
-        menuarea.add(build);
-        menuarea.add(score);
-        
-        frame.add(gamearea,BorderLayout.NORTH);
-        frame.add(menuarea,BorderLayout.SOUTH);
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        return score;
     }
     
     public GameArea getGameArea() {
         return this.TDArea;
+    }
+    
+    public void rePaint() {
+        
     }
    
 }

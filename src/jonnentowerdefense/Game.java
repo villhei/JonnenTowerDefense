@@ -29,6 +29,7 @@ public class Game {
                                         {'B', 'B', 'F', 'B', 'B'}};
         
         GameArea TDArea;
+        GameWindow main;
         ArrayList<Monster> monsterList = new ArrayList<Monster>();
         ArrayList<Tower> towerList = new ArrayList<Tower>();
         ArrayList<Location> path;
@@ -45,7 +46,7 @@ public class Game {
         
         public void initiate() {
             //TDArea = new GameArea(area);
-            GameWindow main = new GameWindow(this);
+            main = new GameWindow(this);
             player = new Player();
             TDArea = main.getGameArea();
             path = TDArea.getRoute();
@@ -61,13 +62,17 @@ public class Game {
                     addMonster();
                     numberOfMonsters-=1;
                 }
-                //DRAW & WAIT
+                main.rePaint();
+                //WAIT
                 moveMonsters();
-                //REDRAW & WAIT
+                main.rePaint();
+                //WAIT
                 shootMonsters();
-                //REDRAW & WAIT
+                main.rePaint();
+                //WAIT
                 checkMonsters();
-                //REDRAW & WAIT
+                main.rePaint();
+                //WAIT
                 //WAIT
                 if(killedMonsters == numberOfMonsters) {
                     //WAVE CLEARED & WAIT
