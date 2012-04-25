@@ -31,6 +31,13 @@ public class Game {
         GameArea TDArea;
         ArrayList<Monster> monsterList = new ArrayList<Monster>();
         ArrayList<Tower> towerList = new ArrayList<Tower>();
+        ArrayList<Location> path;
+        Location startLocation;
+        Location finishLocation;
+        Player player;
+        int numberOfMonsters;
+        int killedMonsters;
+        
         
         public Game() {
             this.initiate();
@@ -39,21 +46,54 @@ public class Game {
         public void initiate() {
             //TDArea = new GameArea(area);
             GameWindow main = new GameWindow(this);
+            player = new Player();
+            TDArea = main.getGameArea();
+            path = TDArea.getRoute();
+            startLocation = TDArea.getStartLocation();
+            finishLocation = TDArea.getFinishLocation();
         }
         
         public void GameLoop() {
+            
+            numberOfMonsters = 5;
             while(true) {
-                
+                if(numberOfMonsters > 0) {
+                    addMonster();
+                    numberOfMonsters-=1;
+                }
+                //DRAW & WAIT
+                moveMonsters();
+                //REDRAW & WAIT
+                shootMonsters();
+                //REDRAW & WAIT
+                checkMonsters();
+                //REDRAW & WAIT
+                //WAIT
+                if(killedMonsters == numberOfMonsters) {
+                    //WAVE CLEARED & WAIT
+                    break;
+                }
             }
         }
         
+        public void addMonster() {
+            Monster tmp = new DefaultMonster(5);
+            tmp.setLocation(startLocation);
+            monsterList.add(tmp);
+        }
+        
         public void moveMonsters() {
-            
+            for (Monster tmpMonster : monsterList) {
+                tmpMonster.increaseRouteIndex();
+                int routeIndex = tmpMonster.getRouteIndex();
+                tmpMonster.setLocation(path.get(routeIndex));
+            }
         }
         
         public void shootMonsters() {
             for (Tower tmpTower : towerList) {
-                findTarget(tmpTower);
+                Monster target = findTarget(tmpTower);
+                tmpTower.shoot(target);
             }
         }
         
@@ -87,6 +127,24 @@ public class Game {
                 return true;
             else
                 return false;
+        }
+        
+        public void checkMonsters() {
+            for (int i = 0; i < monsterList.size(); i++) {
+                Monster tmpMonster = monsterList.get(i);
+                if(tmpMonster.getHealth() <= 0) {
+                    tmpMonster.die();
+                    monsterList.remove(i);
+                    player.addScore(tmpMonster.getValue());
+                    player.addMoney(tmpMonster.getValue());
+                    continue;
+                }
+                if(tmpMonster.getRouteIndex() >= TDArea.getRouteLength()) {
+                    tmpMonster.die();
+                    monsterList.remove(i);
+                    player.removeScore(tmpMonster.getValue());
+                }
+            }
         }
         
         public GameArea getGameArea() {

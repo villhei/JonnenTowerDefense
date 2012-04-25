@@ -5,7 +5,6 @@
 package jonnentowerdefense;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 /**
  *
@@ -21,52 +20,56 @@ public class GameArea {
     
     public GameArea(char[][] area) {
         this.area = area;
+        createGameArea();
+        createPath();
+    }
+
+    public void createGameArea() {
         boolean buildable = false;
         boolean route = false;
         boolean start = false;
         boolean finish = false;
-        
+
         gameArea = new AreaCell[area.length][area[0].length];
         for (int i = 0; i < gameArea.length; i++) {
             for (int j = 0; j < gameArea[0].length; j++) {
-                if(area[i][j] == 'B') {
+                if (area[i][j] == 'B') {
                     buildable = true;
                     route = false;
                     start = false;
                     finish = false;
                     System.out.print("B");
                 }
-                if(area[i][j] == 'E') {
+                if (area[i][j] == 'E') {
                     buildable = false;
                     route = true;
                     start = false;
                     finish = false;
                     System.out.print("E");
                 }
-                if(area[i][j] == 'S') {
+                if (area[i][j] == 'S') {
                     buildable = false;
                     route = true;
                     start = true;
                     finish = false;
-                    startLocation = new Location(i,j);
+                    startLocation = new Location(i, j);
                     System.out.print("S");
                 }
-                if(area[i][j] == 'F') {
+                if (area[i][j] == 'F') {
                     buildable = false;
                     route = true;
                     start = false;
                     finish = true;
-                    finishLocation = new Location(i,j);
+                    finishLocation = new Location(i, j);
                     System.out.print("F");
                 }
-                gameArea[i][j] = new AreaCell(buildable,route,start,finish);
+                gameArea[i][j] = new AreaCell(buildable, route, start, finish);
             }
             System.out.println("");
         }
-        
+    }
 
-        
-        System.out.println("starthor:"+startLocation.getHorPos() + " startver:" + startLocation.getVerPos());
+    public void createPath() {
         Location current = startLocation;
         boolean[][] used = new boolean[gameArea.length][gameArea[0].length];
         while (true) {
@@ -102,17 +105,29 @@ public class GameArea {
                     path.add(current);
                 }
             }
-            if(current.getHorPos() == finishLocation.getHorPos() && current.getVerPos() == finishLocation.getVerPos())
+            if (current.getHorPos() == finishLocation.getHorPos() && current.getVerPos() == finishLocation.getVerPos()) {
                 break;
-        }
-        
-        for (Location tmp : path) {
-            System.out.println("hor:" + tmp.getHorPos() + " ver:" + tmp.getVerPos());
+            }
         }
     }
     
     public AreaCell[][] getArea() {
         return gameArea;
+    }
+    
+    public Location getFinishLocation() {
+        return this.finishLocation;
+    }
+    
+    public Location getStartLocation() {
+        return this.startLocation;
+    }
+    
+    public ArrayList<Location> getRoute() {
+        return path;
+    }
+    public int getRouteLength() {
+        return this.path.size()-1;
     }
      
     public int greatestDistance() {

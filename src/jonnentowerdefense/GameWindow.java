@@ -102,5 +102,9 @@ public class GameWindow {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     }
+    
+    public GameArea getGameArea() {
+        return this.TDArea;
+    }
    
 }

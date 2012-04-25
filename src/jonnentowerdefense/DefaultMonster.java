@@ -10,8 +10,9 @@ package jonnentowerdefense;
  */
 public class DefaultMonster implements Monster {
     
-    
+    private int routeIndex = 0;
     private int health;
+    private int value;
     private Location location;
     public DefaultMonster(int health) {
         this.health = health;
@@ -30,8 +31,24 @@ public class DefaultMonster implements Monster {
         
     }
     
+    public int getValue() {
+        return this.value;
+    }
+    
+    public int getRouteIndex() {
+        return this.routeIndex;
+    }
+    
+    public void increaseRouteIndex() {
+        this.routeIndex+=1;
+    }
+    
     public void setLocation(int x, int y) {
         this.location = new Location(x,y);
+    }
+    
+    public void setLocation(Location location) {
+        this.location = location;
     }
     public Location getLocation() {
         return location;
