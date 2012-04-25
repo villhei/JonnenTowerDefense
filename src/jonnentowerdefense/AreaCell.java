@@ -16,6 +16,7 @@ public class AreaCell extends JPanel {
     private boolean route;
     private boolean start;
     private boolean finish;
+    private Location nextCell;
     
     public AreaCell(boolean buildable, boolean route, boolean start, boolean finish) {
         this.buildable = buildable;
@@ -48,8 +49,12 @@ public class AreaCell extends JPanel {
         return false;
     }
     
+    public void setNextCellonRoute(Location nextCell) {
+        this.nextCell = nextCell;
+    }
+    
     public Location nextCellOnRoute() {
-        return new Location(0,0);
+        return nextCell;
     }
     
 }

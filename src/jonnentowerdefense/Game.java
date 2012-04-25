@@ -6,6 +6,7 @@ package jonnentowerdefense;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import javax.swing.*;
 
 
@@ -28,17 +29,15 @@ public class Game {
                                         {'B', 'B', 'F', 'B', 'B'}};
         
         GameArea TDArea;
-        Monster[] monsterList;
-        Tower[] towerList;
+        ArrayList<Monster> monsterList = new ArrayList<Monster>();
+        ArrayList<Tower> towerList = new ArrayList<Tower>();
         
         public Game() {
             this.initiate();
         }
         
         public void initiate() {
-            TDArea = new GameArea(area);
-            monsterList = new Monster[5];
-            towerList = new Tower[5];
+            //TDArea = new GameArea(area);
             GameWindow main = new GameWindow(this);
         }
         
@@ -48,14 +47,26 @@ public class Game {
             }
         }
         
+        public void moveMonsters() {
+            
+        }
+        
+        public void shootMonsters() {
+            for (Tower tmpTower : towerList) {
+                findTarget(tmpTower);
+            }
+        }
+        
         public Monster findTarget(Tower tower) {
             
             Monster closestMonster = null;
             
-            for (int i = 0; i < monsterList.length; i++) {
-                Monster tmpMonster = monsterList[i];
-                if(isInRange(tmpMonster, tower))
+            for (Monster tmpMonster : monsterList) {
+                //tmpMonster = monsterList.get(i);
+                if(isInRange(tmpMonster, tower)) {
                     closestMonster = tmpMonster;
+                    break;
+                }
             }
             
             return closestMonster;
@@ -82,11 +93,11 @@ public class Game {
             return this.TDArea;
         }
         
-        public Monster[] getMonsterList() {
+        public ArrayList<Monster> getMonsterList() {
             return this.monsterList;
         }
         
-        public Tower[] getTowerList() {
+        public ArrayList<Tower> getTowerList() {
             return this.towerList;
         }
 }
