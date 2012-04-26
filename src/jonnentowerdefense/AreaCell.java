@@ -17,7 +17,7 @@ import javax.swing.*;
  *
  * @author jonne
  */
-public class AreaCell extends JPanel {
+public class AreaCell  {
 
     private GameArea gamearea;
     private boolean buildable;
@@ -31,9 +31,7 @@ public class AreaCell extends JPanel {
     private int hp;
     private Location shooter;
     private Location target;
-    private Image road;
-    private Image grass;
-    private Image towerimg;
+
     
 
     public AreaCell(GameArea gamearea, boolean buildable, boolean route, boolean start, boolean finish, boolean tower) {
@@ -43,27 +41,10 @@ public class AreaCell extends JPanel {
         this.start = start;
         this.finish = finish;
         this.tower = tower;
-        getImages();
-    }
-    
-    public void getImages() {
-        
-        try {
-            File srcimg = new File("road.png");
-            road = ImageIO.read(srcimg);
-            
-            srcimg = new File("grass.png");
-            grass = ImageIO.read(srcimg);
-            
-            srcimg = new File("tower.png");
-            towerimg = ImageIO.read(srcimg);
-        } catch (IOException e) {
-            System.out.println("Kuvaa ei ladattu.");
-        }
-        
-        
 
     }
+    
+
     
     public boolean routeCell() {
         return route;
@@ -104,6 +85,11 @@ public class AreaCell extends JPanel {
     public void setMonsterHP(int hp) {
         this.hp = hp;
     }
+	
+	public int getHP()
+	{
+		return this.hp;
+	}
     public void setNextCellonRoute(Location nextCell) {
         this.nextCell = nextCell;
     }
@@ -124,87 +110,5 @@ public class AreaCell extends JPanel {
     public Location getTarget() {
         return this.target;
     }
-    @Override
-    public void paint(Graphics gfx) {
 
-        
-        
-        if (route) {
-            if (hasMonsters()) {
-                drawMonster(gfx);
-                this.drawRoad(gfx);
-            } else {
-                this.drawRoad(gfx);
-            }
-            if (start) {
-                this.drawStart(gfx);
-            }
-            if (finish) {
-                this.drawFinish(gfx);
-            }
-
-        }
-        if (hasMonsters()) {
-            this.drawMonster(gfx);
-        }
-        if (buildable && !hasTower()) {
-            this.drawBuild(gfx);
-        } else if (hasTower()) {
-            this.drawBuild(gfx);
-            this.drawTower(gfx);
-        }
-    }
-
-    public void drawStart(Graphics gfx) {
-        Font font = new Font("Arial Black", 1, 30);
-        //gfx.setColor(Color.gray);
-        //gfx.fillRect(0, 0, 50, 50);
-        gfx.drawImage(road, 0, 0, this);
-        gfx.setFont(font);
-        gfx.setColor(Color.BLUE);
-        gfx.drawString("S", 15, 35);
-    }
-
-    public void drawFinish(Graphics gfx) {
-        Font font = new Font("Arial Black", 1, 30);
-        //gfx.setColor(Color.gray);
-        //gfx.fillRect(0, 0, 50, 50);
-        gfx.drawImage(road, 0, 0, this);
-        gfx.setFont(font);
-        gfx.setColor(Color.RED);
-        gfx.drawString("F", 15, 35);
-    }
-
-    public void drawRoad(Graphics gfx) {
-        //gfx.setColor(Color.gray);
-        //gfx.fillRect(0, 0, 50, 50);
-        gfx.drawImage(road, 0, 0, this);
-    }
-
-    public void drawBuild(Graphics gfx) {
-        //gfx.setColor(Color.green);
-        //gfx.fillRect(0, 0, 50, 50);
-        gfx.drawImage(grass, 0, 0, this);
-    }
-
-    public void drawTower(Graphics gfx) {
-        //gfx.setColor(Color.black);
-        //gfx.fillRect(10, 10, 30, 30);
-        gfx.drawImage(towerimg, 0, 0, this);
-    }
-    
-    public void drawShoot(Graphics gfx) {
-        gfx.setColor(Color.magenta);
-        gfx.drawLine(25, 25, 5000, 2000);
-    }
-
-    public void drawMonster(Graphics gfx) {
-        Font font = new Font("Arial Black", 4, 15);
-        gfx.setFont(font);
-        gfx.setColor(Color.red);
-        gfx.fillOval(10, 10, 30, 30);
-        gfx.setColor(Color.green);
-        gfx.drawString(""+hp, 20, 30);
-        
-    }
 }

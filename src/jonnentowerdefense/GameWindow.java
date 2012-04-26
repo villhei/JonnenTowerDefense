@@ -38,15 +38,14 @@ public class GameWindow {
     public GameWindow(Game game) {
         this.TDGame = game;
         this.TDArea = new GameArea(area);
-        
+
         frame = new JFrame("Jonnen Tower Defense");
         frame.setSize(horSize,verSize);
         frame.setLayout(new BorderLayout());
         //frame.setBackground(Color.black);
         frame.setResizable(false);
         
-        draw = new GameAreaDraw(TDArea);
-        JPanel gamearea = draw.getAreaPanel();
+        draw = new GameAreaDraw(TDArea, new GridLayout(12, 12, 1, 1));
         JPanel menuarea = new JPanel(new GridLayout());
         JPanel build = makeBuildArea();
         JPanel score = makeScoreArea();
@@ -61,7 +60,7 @@ public class GameWindow {
         menuarea.add(build);
         menuarea.add(score);
         
-        frame.add(gamearea,BorderLayout.NORTH);
+        frame.add(draw,BorderLayout.NORTH);
         frame.add(menuarea,BorderLayout.SOUTH);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -120,7 +119,9 @@ public class GameWindow {
     }
 
     public void repaint() {
-        draw.updateCells();
+		System.out.println("kutsuin repaint");
+		draw.revalidate();
+        draw.repaint();
     }
    
 }
