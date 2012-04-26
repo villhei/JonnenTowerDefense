@@ -17,6 +17,7 @@ public class GameArea {
     private Location startLocation;
     private Location finishLocation;
     private ArrayList<Location> path = new ArrayList<Location>();
+    private boolean shot = false;
     
     public GameArea(char[][] area) {
         this.area = area;
@@ -29,6 +30,7 @@ public class GameArea {
         boolean route = false;
         boolean start = false;
         boolean finish = false;
+        boolean tower = false;
 
         gameArea = new AreaCell[area.length][area[0].length];
         for (int i = 0; i < gameArea.length; i++) {
@@ -38,34 +40,44 @@ public class GameArea {
                     route = false;
                     start = false;
                     finish = false;
-                    System.out.print("B");
+                    tower = false;
+                    //System.out.print("B");
                 }
                 if (area[i][j] == 'E') {
                     buildable = false;
                     route = true;
                     start = false;
                     finish = false;
-                    System.out.print("E");
+                    tower = false;
+                    //System.out.print("E");
                 }
                 if (area[i][j] == 'S') {
                     buildable = false;
                     route = true;
                     start = true;
                     finish = false;
+                    tower = false;
                     startLocation = new Location(i, j);
-                    System.out.print("S");
+                    //System.out.print("S");
                 }
                 if (area[i][j] == 'F') {
                     buildable = false;
                     route = true;
                     start = false;
                     finish = true;
+                    tower = false;
                     finishLocation = new Location(i, j);
-                    System.out.print("F");
+                    //System.out.print("F");
                 }
-                gameArea[i][j] = new AreaCell(buildable, route, start, finish);
+                if(area[i][j] == 'T') {
+                    buildable = false;
+                    route = false;
+                    start = false;
+                    finish = false;
+                    tower = true;
+                }
+                gameArea[i][j] = new AreaCell(this, buildable, route, start, finish, tower);
             }
-            System.out.println("");
         }
     }
 
@@ -115,6 +127,17 @@ public class GameArea {
     
     public AreaCell[][] getArea() {
         return gameArea;
+    }
+    
+    public boolean getShot() {
+        return this.shot;
+    }
+
+    public void shoot(Location shooter, Location target) {
+
+        gameArea[shooter.getVerPos()][shooter.getHorPos()].setShooter(shooter);
+        gameArea[shooter.getVerPos()][shooter.getHorPos()].setTarget(target);
+        this.shot = false;
     }
     
     public Location getFinishLocation() {

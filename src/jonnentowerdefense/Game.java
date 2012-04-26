@@ -38,6 +38,7 @@ public class Game extends Thread {
         Player player;
         int numberOfMonsters;
         int killedMonsters = 0;
+        boolean shot = false;
         
         
         public Game() throws InterruptedException {
@@ -46,6 +47,8 @@ public class Game extends Thread {
         
         public void initiate() throws InterruptedException {
             //TDArea = new GameArea(area);
+            DefaultTower tower = new DefaultTower(6, 3, 1, new Location(2,2));
+            towerList.add(tower);
             main = new GameWindow(this);
             player = new Player();
             TDArea = main.getGameArea();
@@ -60,7 +63,7 @@ public class Game extends Thread {
         }
         
         public void GameLoop() throws InterruptedException {
-            
+            long wait = 50;
             numberOfMonsters = 10;
             int index = 0;
             while(true) {
@@ -71,17 +74,18 @@ public class Game extends Thread {
                     //numberOfMonsters-=1;
                 }
                 main.repaint();
-                Thread.sleep(50);
+                Thread.sleep(wait);
                 moveMonsters();
                 main.repaint();
-                Thread.sleep(50);
-                //shootMonsters();
+                Thread.sleep(wait);
+                shootMonsters();
                 main.repaint();
-                Thread.sleep(50);
+                Thread.sleep(wait);
                 checkMonsters();
                 main.repaint();
-                Thread.sleep(50);
+                Thread.sleep(wait);
                 if(killedMonsters == numberOfMonsters) {
+                    main.repaint();
                     System.out.println("WAVE CLEARED");
                     Thread.sleep(500);
                     break;
@@ -98,12 +102,13 @@ public class Game extends Thread {
         
         public void moveMonsters() {
             for (Monster tmpMonster : monsterList) {
-                System.out.println("hor:"+tmpMonster.getLocation().getHorPos() + " ver:" + tmpMonster.getLocation().getVerPos());
+                //System.out.println("hor:"+tmpMonster.getLocation().getHorPos() + " ver:" + tmpMonster.getLocation().getVerPos());
                 TDArea.getArea()[tmpMonster.getLocation().getVerPos()][tmpMonster.getLocation().getHorPos()].remMonster();
                 tmpMonster.increaseRouteIndex();
                 int routeIndex = tmpMonster.getRouteIndex();
                 tmpMonster.setLocation(path.get(routeIndex));
                 TDArea.getArea()[tmpMonster.getLocation().getVerPos()][tmpMonster.getLocation().getHorPos()].putMonster();
+                TDArea.getArea()[tmpMonster.getLocation().getVerPos()][tmpMonster.getLocation().getHorPos()].setMonsterHP(tmpMonster.getHealth());
             }
         }
         
@@ -111,6 +116,9 @@ public class Game extends Thread {
             for (Tower tmpTower : towerList) {
                 Monster target = findTarget(tmpTower);
                 tmpTower.shoot(target);
+                if(target != null) {
+                main.getGameArea().shoot(tmpTower.getLocation(), target.getLocation());
+                }
             }
         }
         
@@ -147,10 +155,11 @@ public class Game extends Thread {
         }
         
         public void checkMonsters() {
-            System.out.println("checkmonsters, monstereita:" + monsterList.size());
+            //System.out.println("checkmonsters, monstereita:" + monsterList.size());
             for (int i = 0; i < monsterList.size(); i++) {
                 Monster tmpMonster = monsterList.get(i);
                 if(tmpMonster.getHealth() <= 0) {
+                    TDArea.getArea()[tmpMonster.getLocation().getVerPos()][tmpMonster.getLocation().getHorPos()].remMonster();
                     tmpMonster.die();
                     monsterList.remove(i);
                     player.addScore(tmpMonster.getValue());
@@ -160,6 +169,7 @@ public class Game extends Thread {
                     continue;
                 }
                 if(tmpMonster.getRouteIndex() >= TDArea.getRouteLength()) {
+                    TDArea.getArea()[tmpMonster.getLocation().getVerPos()][tmpMonster.getLocation().getHorPos()].remMonster();
                     tmpMonster.die();
                     monsterList.remove(i);
                     player.removeScore(tmpMonster.getValue());

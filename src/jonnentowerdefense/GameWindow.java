@@ -18,7 +18,7 @@ public class GameWindow {
          */
     private static char[][] area =     {{'B', 'S', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'F', 'B'},
                                         {'B', 'E', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'E', 'B'},
-                                        {'B', 'E', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'E', 'B'},
+                                        {'B', 'E', 'T', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'E', 'B'},
                                         {'B', 'E', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'E', 'B'},
                                         {'B', 'E', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'E', 'B'},
                                         {'B', 'E', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'E', 'B'},
@@ -118,7 +118,7 @@ public class GameWindow {
     public GameArea getGameArea() {
         return this.TDArea;
     }
-    
+
     public void repaint() {
         draw.updateCells();
     }

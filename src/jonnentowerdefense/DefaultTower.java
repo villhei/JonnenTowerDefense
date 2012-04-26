@@ -36,8 +36,10 @@ public class DefaultTower implements Tower {
     }
     
     public void shoot(Monster target) {
-        if(target != null)
+        if(target != null) {
             doDamage(target, this.damage);
+            System.out.println("ammuin");
+        }
     }
     
     public void doDamage(Monster target, int damage) {

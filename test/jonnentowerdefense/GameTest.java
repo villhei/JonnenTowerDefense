@@ -30,7 +30,7 @@ public class GameTest {
     Game game;
     
     @Before 
-    public void setUp() {
+    public void setUp() throws InterruptedException {
         game = new Game();
         
         inRangeMonster = new DefaultMonster(5);
