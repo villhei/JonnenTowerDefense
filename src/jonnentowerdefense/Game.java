@@ -38,7 +38,9 @@ public class Game extends Thread {
         Player player;
         int numberOfMonsters;
         int killedMonsters = 0;
+        int finishedMonsters = 0;
         boolean shot = false;
+        int wave = 1;
         
         
         public Game() throws InterruptedException {
@@ -77,7 +79,9 @@ public class Game extends Thread {
         
         public void GameLoop() throws InterruptedException {
             long wait = 50;
-            numberOfMonsters = 20;
+            numberOfMonsters = (int)(40*Math.random());
+            System.out.println("WAVE " + wave);
+            System.out.println("Number of monsters: " + numberOfMonsters);
             int index = 0;
             while(true) {
                 index+=1;
@@ -97,11 +101,18 @@ public class Game extends Thread {
                 checkMonsters();
                 main.repaint();
                 Thread.sleep(wait);
-                if(killedMonsters == numberOfMonsters) {
+                if(killedMonsters+finishedMonsters == numberOfMonsters) {
                     main.repaint();
                     System.out.println("WAVE CLEARED");
+                    System.out.println("KILLED MONSTERS: " + killedMonsters);
+                    System.out.println("FINISHED MONSTERS: " + finishedMonsters);
+                    System.out.println("------------------------------------------");
+                    System.out.println("");
+                    wave+=1;
+                    killedMonsters = 0;
+                    finishedMonsters = 0;
                     Thread.sleep(500);
-                    break;
+                    GameLoop();
                 }
             }
         }
@@ -177,7 +188,6 @@ public class Game extends Thread {
                     monsterList.remove(i);
                     player.addScore(tmpMonster.getValue());
                     player.addMoney(tmpMonster.getValue());
-                    System.out.println("kuolin koska kuolin");
                     killedMonsters+=1;
                     continue;
                 }
@@ -186,8 +196,7 @@ public class Game extends Thread {
                     tmpMonster.die();
                     monsterList.remove(i);
                     player.removeScore(tmpMonster.getValue());
-                    System.out.println("kuolin koska maali");
-                    killedMonsters+=1;
+                    finishedMonsters+=1;
                 }
             }
         }

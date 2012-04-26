@@ -84,6 +84,7 @@ public class GameAreaDraw extends JPanel {
     }
     public void drawShoot(Graphics gfx) {
         gfx.setColor(Color.magenta);
-        gfx.drawLine(shooter.getVerPos()*50+25, shooter.getHorPos()*50+25, target.getVerPos()*50+25, target.getHorPos()*50+25);
+        gfx.drawLine(0, 0, 500, 500);
+        //gfx.drawLine(shooter.getVerPos()*50+25, shooter.getHorPos()*50+25, target.getVerPos()*50+25, target.getHorPos()*50+25);
     }
 }
