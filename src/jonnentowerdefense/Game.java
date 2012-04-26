@@ -47,8 +47,21 @@ public class Game extends Thread {
         
         public void initiate() throws InterruptedException {
             //TDArea = new GameArea(area);
-            DefaultTower tower = new DefaultTower(6, 3, 1, new Location(2,2));
-            towerList.add(tower);
+            
+            DefaultTower tower1 = new DefaultTower(3, 1, 1, new Location(2,2));
+            DefaultTower tower2 = new DefaultTower(3, 1, 1, new Location(2,9));
+            DefaultTower tower3 = new DefaultTower(3, 1, 1, new Location(5,4));
+            DefaultTower tower4 = new DefaultTower(3, 1, 1, new Location(5,10));
+            DefaultTower tower5 = new DefaultTower(3, 1, 1, new Location(8,5));
+            towerList.add(tower1);
+            towerList.add(tower2);
+            towerList.add(tower3);
+            towerList.add(tower4);
+            towerList.add(tower5);
+            
+            
+            
+            
             main = new GameWindow(this);
             player = new Player();
             TDArea = main.getGameArea();
@@ -63,13 +76,13 @@ public class Game extends Thread {
         }
         
         public void GameLoop() throws InterruptedException {
-            long wait = 50;
-            numberOfMonsters = 10;
+            long wait = 20;
+            numberOfMonsters = 15;
             int index = 0;
             while(true) {
                 index+=1;
                 System.out.println(index);
-                if(index <= 10) {
+                if(index <= 15) {
                     addMonster();
                     //numberOfMonsters-=1;
                 }
@@ -94,7 +107,7 @@ public class Game extends Thread {
         }
         
         public void addMonster() {
-            Monster tmp = new DefaultMonster(5);
+            Monster tmp = new DefaultMonster(10);
             tmp.setLocation(startLocation);
             TDArea.getArea()[startLocation.getVerPos()][startLocation.getHorPos()].putMonster();
             monsterList.add(tmp);

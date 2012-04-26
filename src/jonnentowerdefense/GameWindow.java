@@ -16,18 +16,18 @@ public class GameWindow {
     /**
          * B = buildable, E = empty, S = start, F = finish.
          */
-    private static char[][] area =     {{'B', 'S', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'F', 'B'},
-                                        {'B', 'E', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'E', 'B'},
-                                        {'B', 'E', 'T', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'E', 'B'},
-                                        {'B', 'E', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'E', 'B'},
-                                        {'B', 'E', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'E', 'B'},
-                                        {'B', 'E', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'E', 'B'},
-                                        {'B', 'E', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'E', 'B'},
-                                        {'B', 'E', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'E', 'B'},
-                                        {'B', 'E', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'E', 'B'},
-                                        {'B', 'E', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'E', 'B'},
-                                        {'B', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'B'},
-                                        {'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'},};
+    private static char[][] area =     {{'B', 'S', 'B', 'B', 'E', 'E', 'E', 'E', 'B', 'B', 'F', 'B'},
+                                        {'B', 'E', 'B', 'B', 'E', 'B', 'B', 'E', 'B', 'B', 'E', 'B'},
+                                        {'B', 'E', 'T', 'B', 'E', 'B', 'B', 'E', 'B', 'B', 'E', 'B'},
+                                        {'B', 'E', 'B', 'B', 'E', 'B', 'B', 'E', 'B', 'B', 'E', 'B'},
+                                        {'B', 'E', 'B', 'B', 'E', 'T', 'B', 'E', 'B', 'B', 'E', 'B'},
+                                        {'B', 'E', 'B', 'B', 'E', 'B', 'B', 'E', 'T', 'B', 'E', 'B'},
+                                        {'B', 'E', 'B', 'B', 'E', 'B', 'B', 'E', 'B', 'B', 'E', 'B'},
+                                        {'B', 'E', 'B', 'B', 'E', 'B', 'B', 'E', 'B', 'B', 'E', 'B'},
+                                        {'B', 'E', 'B', 'B', 'E', 'B', 'B', 'E', 'B', 'B', 'E', 'B'},
+                                        {'B', 'E', 'T', 'B', 'E', 'B', 'B', 'E', 'B', 'B', 'E', 'B'},
+                                        {'B', 'E', 'B', 'B', 'E', 'T', 'B', 'E', 'B', 'B', 'E', 'B'},
+                                        {'B', 'E', 'E', 'E', 'E', 'B', 'B', 'E', 'E', 'E', 'E', 'B'},};
     JFrame frame;
     private GameArea TDArea;
     final int horSize = 600;
@@ -42,7 +42,7 @@ public class GameWindow {
         frame = new JFrame("Jonnen Tower Defense");
         frame.setSize(horSize,verSize);
         frame.setLayout(new BorderLayout());
-        frame.setBackground(Color.black);
+        //frame.setBackground(Color.black);
         frame.setResizable(false);
         
         draw = new GameAreaDraw(TDArea);
