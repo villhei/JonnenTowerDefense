@@ -71,6 +71,7 @@ public class GameArea {
 
     public void createPath() {
         Location current = startLocation;
+        path.add(startLocation);
         boolean[][] used = new boolean[gameArea.length][gameArea[0].length];
         while (true) {
             if (current.getVerPos() + 1 < gameArea.length) {
@@ -110,6 +111,7 @@ public class GameArea {
             }
         }
     }
+    
     
     public AreaCell[][] getArea() {
         return gameArea;

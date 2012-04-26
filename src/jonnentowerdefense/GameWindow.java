@@ -33,6 +33,7 @@ public class GameWindow {
     final int horSize = 600;
     final int verSize = 800;
     private Game TDGame;
+    private GameAreaDraw draw;
     
     public GameWindow(Game game) {
         this.TDGame = game;
@@ -44,8 +45,8 @@ public class GameWindow {
         frame.setBackground(Color.black);
         frame.setResizable(false);
         
-        
-        JPanel gamearea = makeGameArea();
+        draw = new GameAreaDraw(TDArea);
+        JPanel gamearea = draw.getAreaPanel();
         JPanel menuarea = new JPanel(new GridLayout());
         JPanel build = makeBuildArea();
         JPanel score = makeScoreArea();
@@ -67,32 +68,32 @@ public class GameWindow {
 
     }
     
-    public JPanel makeGameArea() {
-        JPanel gamearea = new JPanel(new GridLayout(12,12,1,1));
-        gamearea.setSize(600, 600);
-        gamearea.setPreferredSize(new Dimension(600,600));
-        gamearea.setVisible(true);
-        
-        
-        AreaCell[][] areaArray = TDArea.getArea();
-        for (int i = 0; i < areaArray.length; i++) {
-            for (int j = 0; j < areaArray[0].length; j++) {
-                JPanel cell = new JPanel();
-                cell.setSize(50, 50);
-                if(areaArray[i][j].buildCell())
-                    cell.setBackground(Color.green);
-                else if(areaArray[i][j].routeCell() && !areaArray[i][j].isStart() && !areaArray[i][j].isFinish())
-                    cell.setBackground(Color.gray);
-                else if(areaArray[i][j].isStart())
-                    cell.setBackground(Color.blue);
-                else if(areaArray[i][j].isFinish())
-                    cell.setBackground(Color.red);
-                cell.setVisible(true);
-                gamearea.add(cell);    
-            }
-        }
-        return gamearea;
-    }
+//    public JPanel makeGameArea() {
+//        JPanel gamearea = new JPanel(new GridLayout(12,12,1,1));
+//        gamearea.setSize(600, 600);
+//        gamearea.setPreferredSize(new Dimension(600,600));
+//        gamearea.setVisible(true);
+//        
+//        
+//        AreaCell[][] areaArray = TDArea.getArea();
+//        for (int i = 0; i < areaArray.length; i++) {
+//            for (int j = 0; j < areaArray[0].length; j++) {
+//                JPanel cell = new JPanel();
+//                cell.setSize(50, 50);
+//                if(areaArray[i][j].buildCell())
+//                    cell.setBackground(Color.green);
+//                else if(areaArray[i][j].routeCell() && !areaArray[i][j].isStart() && !areaArray[i][j].isFinish())
+//                    cell.setBackground(Color.gray);
+//                else if(areaArray[i][j].isStart())
+//                    cell.setBackground(Color.blue);
+//                else if(areaArray[i][j].isFinish())
+//                    cell.setBackground(Color.red);
+//                cell.setVisible(true);
+//                gamearea.add(cell);    
+//            }
+//        }
+//        return gamearea;
+//    }
     
     public JPanel makeBuildArea() {
         JPanel build = new JPanel(new GridLayout(2,2,5,5));
@@ -118,8 +119,8 @@ public class GameWindow {
         return this.TDArea;
     }
     
-    public void rePaint() {
-        
+    public void repaint() {
+        draw.updateCells();
     }
    
 }

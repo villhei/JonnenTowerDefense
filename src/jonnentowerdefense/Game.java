@@ -16,7 +16,7 @@ import javax.swing.*;
  */
 
 
-public class Game {
+public class Game extends Thread {
     
     
         /**
@@ -37,14 +37,14 @@ public class Game {
         Location finishLocation;
         Player player;
         int numberOfMonsters;
-        int killedMonsters;
+        int killedMonsters = 0;
         
         
-        public Game() {
+        public Game() throws InterruptedException {
             this.initiate();
         }
         
-        public void initiate() {
+        public void initiate() throws InterruptedException {
             //TDArea = new GameArea(area);
             main = new GameWindow(this);
             player = new Player();
@@ -52,30 +52,38 @@ public class Game {
             path = TDArea.getRoute();
             startLocation = TDArea.getStartLocation();
             finishLocation = TDArea.getFinishLocation();
+            for (int i = 0; i < path.size(); i++) {
+                System.out.print("hor:"+path.get(i).getHorPos() + " ver:"+ path.get(i).getVerPos()+"||");
+            }
+            System.out.println("");
+            GameLoop();
         }
         
-        public void GameLoop() {
+        public void GameLoop() throws InterruptedException {
             
-            numberOfMonsters = 5;
+            numberOfMonsters = 10;
+            int index = 0;
             while(true) {
-                if(numberOfMonsters > 0) {
+                index+=1;
+                System.out.println(index);
+                if(index <= 10) {
                     addMonster();
-                    numberOfMonsters-=1;
+                    //numberOfMonsters-=1;
                 }
-                main.rePaint();
-                //WAIT
+                main.repaint();
+                Thread.sleep(50);
                 moveMonsters();
-                main.rePaint();
-                //WAIT
-                shootMonsters();
-                main.rePaint();
-                //WAIT
+                main.repaint();
+                Thread.sleep(50);
+                //shootMonsters();
+                main.repaint();
+                Thread.sleep(50);
                 checkMonsters();
-                main.rePaint();
-                //WAIT
-                //WAIT
+                main.repaint();
+                Thread.sleep(50);
                 if(killedMonsters == numberOfMonsters) {
-                    //WAVE CLEARED & WAIT
+                    System.out.println("WAVE CLEARED");
+                    Thread.sleep(500);
                     break;
                 }
             }
@@ -84,14 +92,18 @@ public class Game {
         public void addMonster() {
             Monster tmp = new DefaultMonster(5);
             tmp.setLocation(startLocation);
+            TDArea.getArea()[startLocation.getVerPos()][startLocation.getHorPos()].putMonster();
             monsterList.add(tmp);
         }
         
         public void moveMonsters() {
             for (Monster tmpMonster : monsterList) {
+                System.out.println("hor:"+tmpMonster.getLocation().getHorPos() + " ver:" + tmpMonster.getLocation().getVerPos());
+                TDArea.getArea()[tmpMonster.getLocation().getVerPos()][tmpMonster.getLocation().getHorPos()].remMonster();
                 tmpMonster.increaseRouteIndex();
                 int routeIndex = tmpMonster.getRouteIndex();
                 tmpMonster.setLocation(path.get(routeIndex));
+                TDArea.getArea()[tmpMonster.getLocation().getVerPos()][tmpMonster.getLocation().getHorPos()].putMonster();
             }
         }
         
@@ -135,6 +147,7 @@ public class Game {
         }
         
         public void checkMonsters() {
+            System.out.println("checkmonsters, monstereita:" + monsterList.size());
             for (int i = 0; i < monsterList.size(); i++) {
                 Monster tmpMonster = monsterList.get(i);
                 if(tmpMonster.getHealth() <= 0) {
@@ -142,12 +155,16 @@ public class Game {
                     monsterList.remove(i);
                     player.addScore(tmpMonster.getValue());
                     player.addMoney(tmpMonster.getValue());
+                    System.out.println("kuolin koska kuolin");
+                    killedMonsters+=1;
                     continue;
                 }
                 if(tmpMonster.getRouteIndex() >= TDArea.getRouteLength()) {
                     tmpMonster.die();
                     monsterList.remove(i);
                     player.removeScore(tmpMonster.getValue());
+                    System.out.println("kuolin koska maali");
+                    killedMonsters+=1;
                 }
             }
         }
