@@ -76,13 +76,13 @@ public class Game extends Thread {
         }
         
         public void GameLoop() throws InterruptedException {
-            long wait = 20;
-            numberOfMonsters = 15;
+            long wait = 50;
+            numberOfMonsters = 20;
             int index = 0;
             while(true) {
                 index+=1;
-                System.out.println(index);
-                if(index <= 15) {
+                //System.out.println(index);
+                if(index <= numberOfMonsters) {
                     addMonster();
                     //numberOfMonsters-=1;
                 }

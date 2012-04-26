@@ -65,24 +65,25 @@ public class GameAreaDraw extends JPanel {
         for (int i = 0; i < areaArray.length; i++) {
             for (int j = 0; j < areaArray[0].length; j++) {
                 areaArray[i][j].repaint();
-//                if (areaArray[i][j].getShooter() != null && areaArray[i][j].getTarget() != null) {
-//                    shooters.add(areaArray[i][j].getShooter());
-//                    targets.add(areaArray[i][j].getTarget());
-//                }
+                if (areaArray[i][j].getShooter() != null && areaArray[i][j].getTarget() != null) {
+                    shooters.add(areaArray[i][j].getShooter());
+                    targets.add(areaArray[i][j].getTarget());
+                }
             }
         }
-//        for (int i = 0; i < shooters.size(); i++) {
-//            shooter = shooters.get(i);
-//            target = targets.get(i);
-//            this.repaint();
-//        }
+        for (int i = 0; i < shooters.size(); i++) {
+            shooter = shooters.get(i);
+            target = targets.get(i);
+            this.repaint();
+        }
     }
 
-//    public void paint(Graphics gfx) {
-//        drawShoot(gfx);
-//    }
-//    public void drawShoot(Graphics gfx) {
-//        gfx.setColor(Color.magenta);
-//        gfx.drawLine(shooter.getVerPos()*50+25, shooter.getHorPos()*50+25, target.getVerPos()*50+25, target.getHorPos()*50+25);
-//    }
+    @Override
+    public void paint(Graphics gfx) {
+        drawShoot(gfx);
+    }
+    public void drawShoot(Graphics gfx) {
+        gfx.setColor(Color.magenta);
+        gfx.drawLine(shooter.getVerPos()*50+25, shooter.getHorPos()*50+25, target.getVerPos()*50+25, target.getHorPos()*50+25);
+    }
 }
