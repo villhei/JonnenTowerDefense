@@ -53,7 +53,6 @@ public class GameAreaDraw extends JPanel {
 
 	@Override
 	public void paint(Graphics gfx) {
-		System.out.println("vastasin paint");
 		paintCellContents(gfx);
 		paintLaserLines(gfx);
 	}
@@ -158,7 +157,7 @@ public class GameAreaDraw extends JPanel {
 		gfx.setColor(Color.red);
 		gfx.fillOval(10+(j*50), 10+(i*50), 30, 30);
 		gfx.setColor(Color.green);
-		gfx.drawString("" + areacell.getHP(), 20, 30);
+		gfx.drawString("" + areacell.getHP(), 20+(j*50), 30+(i*50));
 
 	}
 

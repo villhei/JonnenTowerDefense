@@ -119,7 +119,6 @@ public class GameWindow {
     }
 
     public void repaint() {
-		System.out.println("kutsuin repaint");
 		draw.revalidate();
         draw.repaint();
     }
